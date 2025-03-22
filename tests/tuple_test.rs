@@ -5,22 +5,65 @@ mod test_hack;
 mod tuple_test {
 
         // Import the necessary modules.
-        use crate::test_hack::TEST_PASSED;
         use crate::test_hack::expect_eq;
-        use crate::fast_tuple;
+        use crate::test_hack::expect_float_eq;
+        use crate::test_hack::setup;
+        use crate::test_hack::teardown;
+        use crate::fast_tuple::FastTuple;
 
-        // Ensure that FastTuple works as expected
+        // Ensure that FastTuple works as expected for points (w = 1.0)
         #[test]
-        fn test_fast_tuple() {
-            unsafe { TEST_PASSED = true }; // Hack to initialize TEST_PASSED state.
-            let tuple = fast_tuple::FastTuple { x: 3.3, y: 4.4, z: 5.5, w:1.0};
-            assert!(true);
-            expect_eq!(tuple.x, 3.3);   
-            expect_eq!(tuple.y, 4.4);   
-            expect_eq!(tuple.z, 5.5);
-            expect_eq!(tuple.w, 1.0);   
+        fn test_point_tuple() {
+            unsafe { setup() };
+            let tuple = FastTuple { x: 4.3, y: -4.2, z: 3.1, w:1.0};
+            expect_float_eq!(tuple.x, 4.3);   
+            expect_float_eq!(tuple.y, -4.2);   
+            expect_float_eq!(tuple.z, 3.1);
+            expect_eq!(tuple.w, 1.0);
             expect_eq!(tuple.is_point(), true);
             expect_eq!(tuple.is_vector(), false);
-            unsafe { assert!(TEST_PASSED) }; // Hack to check TEST_PASSED state.
+            unsafe { teardown() };
+        }
+
+        // Ensure that FastTuple works as expected for vector (w = 0.0)
+        #[test]
+        fn test_vector_tuple() {
+            unsafe { setup() };
+            let tuple = FastTuple { x: 4.3, y: -4.2, z: 3.1, w:1.0};
+            expect_float_eq!(tuple.x, 4.3);   
+            expect_float_eq!(tuple.y, -4.2);   
+            expect_float_eq!(tuple.z, 3.1);
+            expect_eq!(tuple.w, 1.0);
+            expect_eq!(tuple.is_point(), true);
+            expect_eq!(tuple.is_vector(), false);
+            unsafe { teardown() };
+        }
+
+        // Ensure that we can create a point as a FastTuple.
+        #[test]
+        fn test_create_point() {
+            unsafe { setup() };
+            let point = FastTuple::point(4.0, -4.0, 3.0);
+            expect_float_eq!(point.x, 4.0);
+            expect_float_eq!(point.y, -4.0);
+            expect_float_eq!(point.z, 3.0);
+            expect_eq!(point.w, 1.0);
+            expect_eq!(point.is_point(), true);
+            expect_eq!(point.is_vector(), false);
+            unsafe { teardown() };
+        }
+
+        // Ensure that we can create a vector as a FastTuple.
+        #[test]
+        fn test_create_vector() {
+            unsafe { setup() };
+            let vector = FastTuple::vector(4.0, -4.0, 3.0);
+            expect_float_eq!(vector.x, 4.0);
+            expect_float_eq!(vector.y, -4.0);
+            expect_float_eq!(vector.z, 3.0);
+            expect_eq!(vector.w, 0.0);
+            expect_eq!(vector.is_point(), false);
+            expect_eq!(vector.is_vector(), true);
+            unsafe { teardown() };
         }
 }

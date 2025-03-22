@@ -6,11 +6,20 @@ pub struct FastTuple {
 }
 
 impl FastTuple {
+    // Note that this uses == for this, but 1.0 and 0.0 should never result in loss of precision.
     pub fn is_point(&self) -> bool {
         return self.w == 1.0
     }
 
     pub fn is_vector(&self) -> bool {
         return !self.is_point()
+    }
+
+    pub fn point(x: f32, y: f32, z: f32) -> FastTuple {
+        return FastTuple {x: x, y: y, z: z, w: 1.0}
+    }
+
+    pub fn vector(x: f32, y: f32, z: f32) -> FastTuple {
+        return FastTuple {x: x, y: y, z: z, w: 0.0}
     }
 }
