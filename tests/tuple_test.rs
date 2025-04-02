@@ -66,4 +66,95 @@ mod tuple_test {
             expect_eq!(vector.is_vector(), true);
             unsafe { teardown() };
         }
+
+        // Ensure that tuple addition works.
+        #[test]
+        fn test_tuple_addition() {
+            unsafe { setup() };
+            let a1 = FastTuple { x: 3.0, y: -2.0, z: 5.0, w:1.0};
+            let a2 = FastTuple { x: -2.0, y: 3.0, z: 1.0, w:0.0};
+            let expected = FastTuple { x: 1.0, y: 1.0, z: 6.0, w:1.0};
+            expect_eq!(a1+a2, expected);
+
+            unsafe { teardown() };
+        }
+
+        // Ensure that point-vector subtraction works.
+        #[test]
+        fn test_vector_from_point_subtraction() {
+            unsafe { setup() };
+            let p1 = FastTuple::point(3.0, 2.0, 1.0);
+            let p2 = FastTuple::vector(5.0, 6.0, 7.0);
+            let expected = FastTuple::point(-2.0, -4.0, -6.0);
+            expect_eq!(p1-p2, expected);
+
+            unsafe { teardown() };
+        }
+
+        // Ensure that vector subtraction works.
+        #[test]
+        fn test_vector_subtraction() {
+            unsafe { setup() };
+            let p1 = FastTuple::vector(3.0, 2.0, 1.0);
+            let p2 = FastTuple::vector(5.0, 6.0, 7.0);
+            let expected = FastTuple::vector(-2.0, -4.0, -6.0);
+            expect_eq!(p1-p2, expected);
+
+            unsafe { teardown() };
+        }
+
+        // Vector subtraction from zero.
+        #[test]
+        fn test_vector_from_zero_subtraction() {
+            unsafe { setup() };
+            let zero = FastTuple::vector(0.0, 0.0, 0.0);
+            let v1 = FastTuple::vector(1.0, -2.0, 3.0);
+            expect_eq!(zero-v1, FastTuple::vector(-1.0, 2.0, -3.0));
+            unsafe { teardown() };
+        }
+
+        // Ensure that vector negation works.
+        #[test]
+        fn test_vector_negation() {
+            unsafe { setup() };
+            let a = FastTuple {x: 1.0, y: -2.0, z: 3.0, w: -4.0};
+            expect_eq!(-a, FastTuple {x: -1.0, y: 2.0, z: -3.0, w: 4.0});
+            unsafe { teardown() };
+        }
+
+        // Ensure scalar multiplication works.
+        #[test]
+        fn test_scalar_multiplication() {
+            unsafe { setup() };
+            let a = FastTuple {x: 1.0, y: -2.0, z: 3.0, w: -4.0};
+            expect_eq!(a * 3.5, FastTuple {x: 3.5, y: -7.0, z: 10.5, w: -14.0});
+            expect_eq!(a * 0.5, FastTuple {x: 0.5, y: -1.0, z: 1.5, w: -2.0});
+            unsafe { teardown() };
+        }
+
+        // Ensure scalar division works.
+        #[test]
+        fn test_scalar_division() {
+            unsafe { setup() };
+            let a = FastTuple {x: 1.0, y: -2.0, z: 3.0, w: -4.0};
+            expect_eq!(a / 2.0, FastTuple {x: 0.5, y: -1.0, z: 1.5, w: -2.0});
+            unsafe { teardown() };
+        }
+
+        // Ensure vector magnitude works as expected.
+        #[test]
+        fn test_vector_magnitude() {
+            unsafe { setup() };
+            let v1 = FastTuple::vector(1.0, 0.0, 0.0);
+            expect_float_eq!(v1.magnitude(), 1.0);
+            let v2 = FastTuple::vector(0.0, 1.0, 0.0);
+            expect_float_eq!(v2.magnitude(), 1.0);
+            let v3 = FastTuple::vector(0.0, 0.0, 1.0);
+            expect_float_eq!(v3.magnitude(), 1.0);
+            let v4 = FastTuple::vector(1.0, 2.0, 3.0);
+            expect_float_eq!(v4.magnitude(), (14.0_f32).sqrt());
+            let v5 = FastTuple::vector(-1.0, -2.0, -3.0);
+            expect_float_eq!(v5.magnitude(), (14.0_f32).sqrt());
+            unsafe { teardown() };
+        }
 }

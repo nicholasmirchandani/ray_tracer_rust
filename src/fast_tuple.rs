@@ -12,7 +12,11 @@ impl FastTuple {
     }
 
     pub fn is_vector(&self) -> bool {
-        return !self.is_point()
+        return self.w == 0.0
+    }
+
+    pub fn magnitude(&self) -> f32 {
+        return (self.x * self.x + self.y * self.y + self.z * self.z + self.w * self.w).sqrt()
     }
 
     pub fn point(x: f32, y: f32, z: f32) -> FastTuple {
@@ -31,5 +35,86 @@ impl PartialEq for FastTuple {
         let y_eq = (self.y - other.y).abs() < epsilon;
         let z_eq = (self.z - other.z).abs() < epsilon;
         return x_eq && y_eq && z_eq && self.w == other.w;
+    }
+}
+
+impl std::ops::Add for FastTuple {
+    type Output = Self;
+
+    fn add(self, other : Self) -> Self {
+        Self {
+            x: self.x + other.x,
+            y: self.y + other.y,
+            z: self.z + other.z,
+            w: self.w + other.w
+        }
+    }
+}
+
+impl std::ops::Sub for FastTuple {
+    type Output = Self;
+
+    fn sub(self, other: Self) -> Self {
+        Self { 
+            x: self.x - other.x,
+            y: self.y - other.y,
+            z: self.z - other.z,
+            w: self.w - other.w
+        }
+    }
+}
+
+impl std::fmt::Display for FastTuple {
+    fn fmt(&self, f : &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "({}, {}, {}, {})", self.x, self.y, self.z, self.w)
+    }
+}
+
+impl std::marker::Copy for FastTuple { }
+
+impl std::clone::Clone for FastTuple {
+    fn clone(&self) -> FastTuple {
+        *self
+    }
+}
+
+impl std::ops::Neg for FastTuple {
+    type Output = Self;
+
+    fn neg(self) -> Self {
+        Self {
+            x: -self.x,
+            y: -self.y,
+            z: -self.z,
+            w: -self.w
+        }
+    }
+}
+
+impl std::ops::Mul<f32> for FastTuple {
+    type Output = Self;
+
+    // Scalar multiplication
+    fn mul(self, scalar : f32) -> Self {
+        Self {
+            x: self.x * scalar,
+            y: self.y * scalar,
+            z: self.z * scalar,
+            w: self.w * scalar
+        }
+    }
+}
+
+impl std::ops::Div<f32> for FastTuple {
+    type Output = Self;
+
+    // Scalar division
+    fn div(self, scalar : f32) -> Self {
+        Self {
+            x: self.x / scalar,
+            y: self.y / scalar,
+            z: self.z / scalar,
+            w: self.w / scalar
+        }
     }
 }
