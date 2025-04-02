@@ -23,3 +23,13 @@ impl FastTuple {
         return FastTuple {x: x, y: y, z: z, w: 0.0}
     }
 }
+
+impl PartialEq for FastTuple {
+    fn eq(&self, other: &Self) -> bool {
+        let epsilon = 0.00001;
+        let x_eq = (self.x - other.x).abs() < epsilon;
+        let y_eq = (self.y - other.y).abs() < epsilon;
+        let z_eq = (self.z - other.z).abs() < epsilon;
+        return x_eq && y_eq && z_eq && self.w == other.w;
+    }
+}
