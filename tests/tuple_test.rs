@@ -157,4 +157,39 @@ mod tuple_test {
             expect_float_eq!(v5.magnitude(), (14.0_f32).sqrt());
             unsafe { teardown() };
         }
+
+        // Ensure normalization works as expected.
+        #[test]
+        fn test_normalization() {
+            unsafe { setup() };
+            let v1 = FastTuple::vector(4.0, 0.0, 0.0);
+            expect_eq!(FastTuple::normalize(v1), FastTuple::vector(1.0, 0.0, 0.0));
+
+            let v2 = FastTuple::vector(1.0, 2.0, 3.0);
+            expect_eq!(FastTuple::normalize(v2), FastTuple::vector(0.26726, 0.53452, 0.80178));
+            unsafe { teardown() };
+        }
+
+        // Ensure dot product works as expected.
+        #[test]
+        fn test_dot_product() {
+            unsafe { setup() };
+            let a = FastTuple::vector(1.0, 2.0, 3.0);
+            let b = FastTuple::vector(2.0, 3.0, 4.0);
+            expect_float_eq!(FastTuple::dot(a,b), 20.0);
+
+            unsafe { teardown() };
+        }
+
+        // Ensure cross product works as expected.
+        #[test]
+        fn test_cross_product() {
+            unsafe { setup() };
+            let a = FastTuple::vector(1.0, 2.0, 3.0);
+            let b = FastTuple::vector(2.0, 3.0, 4.0);
+
+            expect_eq!(FastTuple::cross(a,b), FastTuple::vector(-1.0, 2.0, -1.0));
+            expect_eq!(FastTuple::cross(b,a), FastTuple::vector(1.0, -2.0, 1.0));
+            unsafe { teardown() };
+        }
 }

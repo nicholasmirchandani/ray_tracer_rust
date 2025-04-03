@@ -26,6 +26,35 @@ impl FastTuple {
     pub fn vector(x: f32, y: f32, z: f32) -> FastTuple {
         return FastTuple {x: x, y: y, z: z, w: 0.0}
     }
+
+    pub fn normalize(ft : FastTuple) -> FastTuple {
+        let mag = ft.magnitude();
+        if mag == 0.0 {
+            return FastTuple { x: 0.0, y: 0.0, z: 0.0, w: 0.0};
+        }
+
+        FastTuple {
+            x : ft.x / mag,
+            y : ft.y / mag,
+            z : ft.z / mag,
+            // Normalizing a vector => w  is always 0; potential optimization.
+            w : ft.w / mag
+        }
+    }
+
+    pub fn dot(a : FastTuple, b : FastTuple) -> f32 {
+        a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w 
+    }
+
+    pub fn cross(a : FastTuple, b : FastTuple) -> FastTuple {
+        FastTuple {
+            x: a.y * b.z - a.z * b.y,
+            y: a.z * b.x - a.x * b.z,
+            z: a.x * b.y - a.y * b.x,
+            // Vector!
+            w: 0.0
+        }
+    }
 }
 
 impl PartialEq for FastTuple {
