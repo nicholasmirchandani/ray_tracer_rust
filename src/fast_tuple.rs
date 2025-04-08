@@ -117,7 +117,7 @@ impl std::fmt::Display for FastTuple {
 impl std::marker::Copy for FastTuple {}
 
 impl std::clone::Clone for FastTuple {
-    fn clone(&self) -> FastTuple {
+    fn clone(&self) -> Self {
         *self
     }
 }
