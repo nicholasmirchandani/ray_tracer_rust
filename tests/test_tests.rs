@@ -12,18 +12,17 @@ mod tests {
     #[test]
     fn test_something() {
         unsafe { setup() };
-        expect_eq!(3, 3);    
+        expect_eq!(3, 3);
         unsafe { teardown() };
     }
 
     // This test is a sanity check to ensure failing things fail, and that the fail is a non fatal assertion
     #[test]
-    fn test_fail(){
+    fn test_fail() {
         unsafe { setup() };
-        expect_eq!(2+2, 3);   
-        expect_eq!(3, 3);   
-        expect_eq!(2+7, 3);   
+        expect_eq!(2 + 2, 3);
+        expect_eq!(3, 3);
+        expect_eq!(2 + 7, 3);
         unsafe { assert!(!TEST_PASSED) }; // Note we can't use teardown() here, since this is actually expecting the failure.  
     }
-
 }
