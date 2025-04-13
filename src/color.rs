@@ -4,6 +4,12 @@ pub struct Color {
     pub blue: f32,
 }
 
+impl Color {
+    pub fn new(red: f32, green: f32, blue: f32) -> Color {
+        Color { red, green, blue }
+    }
+}
+
 impl PartialEq for Color {
     fn eq(&self, other: &Self) -> bool {
         let epsilon = 0.00001;
