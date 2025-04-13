@@ -7,12 +7,13 @@ pub struct Canvas {
     pub height: usize,
 
     // Note 2D array is inefficient, but logically most simple.
+    // pixels[width][height] <=> pixels[x][y]
     pub pixels: Vec<Vec<Color>>,
 }
 
 impl Canvas {
+    // Constructor.
     pub fn new(width: usize, height: usize) -> Self {
-        // Refer to pixel as pixel[width, height]
         let pixels: Vec<Vec<Color>> = vec![vec![Color::new(0.0, 0.0, 0.0); height]; width];
         Canvas {
             width,

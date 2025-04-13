@@ -29,4 +29,15 @@ mod canvas_test {
         }
         unsafe { teardown() };
     }
+
+    // Ensures canvases can be written to
+    #[test]
+    fn test_write_pixel() {
+        unsafe { setup() };
+        let mut c = Canvas::new(10, 20);
+        let red = Color::new(1.0, 0.0, 0.0);
+        c.pixels[2][3] = red;
+        expect_eq!(c.pixels[2][3], red);
+        unsafe { teardown() };
+    }
 }
