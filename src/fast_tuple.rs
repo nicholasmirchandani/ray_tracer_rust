@@ -6,7 +6,7 @@ pub struct FastTuple {
 }
 
 impl FastTuple {
-    pub fn new(x: f32, y: f32, z: f32, w: f32) -> FastTuple {
+    pub fn new(x: f32, y: f32, z: f32, w: f32) -> Self {
         FastTuple { x, y, z, w }
     }
 

@@ -5,7 +5,7 @@ pub struct Color {
 }
 
 impl Color {
-    pub fn new(red: f32, green: f32, blue: f32) -> Color {
+    pub fn new(red: f32, green: f32, blue: f32) -> Self {
         Color { red, green, blue }
     }
 }
