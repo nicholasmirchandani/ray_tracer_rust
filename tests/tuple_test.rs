@@ -16,12 +16,7 @@ mod tuple_test {
     #[test]
     fn test_point_tuple() {
         unsafe { setup() };
-        let tuple = FastTuple {
-            x: 4.3,
-            y: -4.2,
-            z: 3.1,
-            w: 1.0,
-        };
+        let tuple = FastTuple::new(4.3, -4.2, 3.1, 1.0);
         expect_float_eq!(tuple.x, 4.3);
         expect_float_eq!(tuple.y, -4.2);
         expect_float_eq!(tuple.z, 3.1);
@@ -35,12 +30,7 @@ mod tuple_test {
     #[test]
     fn test_vector_tuple() {
         unsafe { setup() };
-        let tuple = FastTuple {
-            x: 4.3,
-            y: -4.2,
-            z: 3.1,
-            w: 1.0,
-        };
+        let tuple = FastTuple::new(4.3, -4.2, 3.1, 1.0);
         expect_float_eq!(tuple.x, 4.3);
         expect_float_eq!(tuple.y, -4.2);
         expect_float_eq!(tuple.z, 3.1);
@@ -82,24 +72,9 @@ mod tuple_test {
     #[test]
     fn test_tuple_addition() {
         unsafe { setup() };
-        let a1 = FastTuple {
-            x: 3.0,
-            y: -2.0,
-            z: 5.0,
-            w: 1.0,
-        };
-        let a2 = FastTuple {
-            x: -2.0,
-            y: 3.0,
-            z: 1.0,
-            w: 0.0,
-        };
-        let expected = FastTuple {
-            x: 1.0,
-            y: 1.0,
-            z: 6.0,
-            w: 1.0,
-        };
+        let a1 = FastTuple::new(3.0, -2.0, 5.0, 1.0);
+        let a2 = FastTuple::new(-2.0, 3.0, 1.0, 0.0);
+        let expected = FastTuple::new(1.0, 1.0, 6.0, 1.0);
         expect_eq!(a1 + a2, expected);
 
         unsafe { teardown() };
@@ -143,21 +118,8 @@ mod tuple_test {
     #[test]
     fn test_vector_negation() {
         unsafe { setup() };
-        let a = FastTuple {
-            x: 1.0,
-            y: -2.0,
-            z: 3.0,
-            w: -4.0,
-        };
-        expect_eq!(
-            -a,
-            FastTuple {
-                x: -1.0,
-                y: 2.0,
-                z: -3.0,
-                w: 4.0
-            }
-        );
+        let a = FastTuple::new(1.0, -2.0, 3.0, -4.0);
+        expect_eq!(-a, FastTuple::new(-1.0, 2.0, -3.0, 4.0));
         unsafe { teardown() };
     }
 
@@ -165,30 +127,9 @@ mod tuple_test {
     #[test]
     fn test_scalar_multiplication() {
         unsafe { setup() };
-        let a = FastTuple {
-            x: 1.0,
-            y: -2.0,
-            z: 3.0,
-            w: -4.0,
-        };
-        expect_eq!(
-            a * 3.5,
-            FastTuple {
-                x: 3.5,
-                y: -7.0,
-                z: 10.5,
-                w: -14.0
-            }
-        );
-        expect_eq!(
-            a * 0.5,
-            FastTuple {
-                x: 0.5,
-                y: -1.0,
-                z: 1.5,
-                w: -2.0
-            }
-        );
+        let a = FastTuple::new(1.0, -2.0, 3.0, -4.0);
+        expect_eq!(a * 3.5, FastTuple::new(3.5, -7.0, 10.5, -14.0));
+        expect_eq!(a * 0.5, FastTuple::new(0.5, -1.0, 1.5, -2.0));
         unsafe { teardown() };
     }
 
@@ -196,21 +137,8 @@ mod tuple_test {
     #[test]
     fn test_scalar_division() {
         unsafe { setup() };
-        let a = FastTuple {
-            x: 1.0,
-            y: -2.0,
-            z: 3.0,
-            w: -4.0,
-        };
-        expect_eq!(
-            a / 2.0,
-            FastTuple {
-                x: 0.5,
-                y: -1.0,
-                z: 1.5,
-                w: -2.0
-            }
-        );
+        let a = FastTuple::new(1.0, -2.0, 3.0, -4.0);
+        expect_eq!(a / 2.0, FastTuple::new(0.5, -1.0, 1.5, -2.0));
         unsafe { teardown() };
     }
 
