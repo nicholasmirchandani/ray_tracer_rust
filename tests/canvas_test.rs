@@ -21,10 +21,10 @@ mod canvas_test {
         let c = Canvas::new(10, 20);
         expect_eq!(c.width, 10);
         expect_eq!(c.height, 20);
-        
-        for column in c.pixels.iter() {
-            for pixel in column.iter() {
-                expect_eq!(*pixel, Color::new(0.0,0.0,0.0));
+
+        for column in c.pixels {
+            for pixel in column {
+                expect_eq!(pixel, Color::new(0.0, 0.0, 0.0));
             }
         }
         unsafe { teardown() };
